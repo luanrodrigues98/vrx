@@ -43,10 +43,15 @@ def launch(context, *args, **kwargs):
         with open(config_file, 'r') as stream:
             models = Model.FromConfig(stream)
     else:
-      m = Model('wamv', 'wam-v', [-532, 162, 0, 0, 0, 1])
-      if robot_urdf and robot_urdf != '':
-          m.set_urdf(robot_urdf)
-      models.append(m)
+       swarm_size = 1
+       for i in range(swarm_size):
+         pos = 2*i 
+         _id = i + 1 
+         m = Model(f'wamv{_id}', 'wam-v', [-532 + pos, 162 - pos, 0, 0, 0, 0])
+         if robot_urdf and robot_urdf != '':
+             m.set_urdf(robot_urdf)
+         models.append(m)
+
 
     world_name, ext = os.path.splitext(world_name)
     launch_processes.extend(vrx_gz.launch.simulation(world_name, headless, 
