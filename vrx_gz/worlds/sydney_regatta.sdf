@@ -14,7 +14,7 @@
         <!-- “Contact surface layer” amortece contatos e evita jitter -->
         <cfm>1e-4</cfm>
         <!-- Use 2 ou 4 threads se o PC tiver núcleos sobrando -->
-        <threads>8</threads>
+        <threads>10</threads>
       </ode>
     </physics>
 

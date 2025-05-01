@@ -25,6 +25,7 @@ from vrx_gz.model import Model
 
 def launch(context, *args, **kwargs):
     config_file = LaunchConfiguration('config_file').perform(context)
+    swarm_size = int(LaunchConfiguration('swarm_size').perform(context))
     world_name = LaunchConfiguration('world').perform(context)
     sim_mode = LaunchConfiguration('sim_mode').perform(context)
     bridge_competition_topics = LaunchConfiguration(
@@ -43,7 +44,6 @@ def launch(context, *args, **kwargs):
         with open(config_file, 'r') as stream:
             models = Model.FromConfig(stream)
     else:
-        swarm_size = 1
         y = -663
         x = -182 
         counter = 0
@@ -81,6 +81,11 @@ def launch(context, *args, **kwargs):
 def generate_launch_description():
     return LaunchDescription([
         # Launch Arguments
+        DeclareLaunchArgument(
+            'swarm_size',
+            default_value='1',
+            description='Number of WAM-Vs to spawn in the simulation.'
+        ),
         DeclareLaunchArgument(
             'world',
             default_value='sydney_regatta',
