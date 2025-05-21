@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="wam-v-containment-boom">
+<xacro:macro name="containment_boom" params="position:='0 0 0' orientation:='0 0 0'">
+  <link name="${namespace}/containment_boom_link">
+    <visual>
+       <material name="orange_material">
+        <color rgba="1.0 0.5 0.0 1.0"/>
+      </material>
+      <origin xyz="0.073 0 -1.53" rpy="0 0 0"/>
+      <geometry>
+        <box size="4.0 0.1 0.5"/>
+      </geometry>
+    </visual>
+    <collision name="containment_boom_1_collision">
+      <origin xyz="0.185 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="4.0 0.1 0.5"/>
+      </geometry>
+    </collision>
+    <collision name="containment_boom_2_collision">
+      <origin xyz="-0.3 0 -0.092" rpy="0 0 0"/>
+      <geometry>
+        <box size="4.0 0.1 0.5"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="20"/>
+      <inertia
+        ixx="1.51633333333333"
+        iyy="1.93633333333333"
+        izz="2.71633333333333"
+        ixy="0"
+        ixz="0"
+        iyz="0"/>
+    </inertial>
+  </link>
+  <joint name ="${namespace}/chasis_containment_boom_joint" type="fixed">
+    <origin xyz="${position}" rpy="${orientation}"/>
+    <parent link="${namespace}/base_link"/>
+    <child link="${namespace}/containment_boom_link"/>
+  </joint>
+
+
+</xacro:macro>
+</robot>
+

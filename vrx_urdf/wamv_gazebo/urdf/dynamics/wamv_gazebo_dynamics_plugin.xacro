@@ -15,9 +15,6 @@
           <point>0.6 1.03 0</point>
           <point>-1.4 1.03 0</point>
         </points>
-        <wavefield>
-          <topic>/vrx/wavefield/parameters</topic>
-        </wavefield>
       </plugin>
 
       <!-- Right hull -->
@@ -32,31 +29,36 @@
           <point>0.6 -1.03 0</point>
           <point>-1.4 -1.03 0</point>
         </points>
-        <wavefield>
-          <topic>/vrx/wavefield/parameters</topic>
-        </wavefield>
       </plugin>
 
       <plugin
-        filename="libSimpleHydrodynamics.so"
-        name="vrx::SimpleHydrodynamics">
-        <link_name>${namespace}/base_link</link_name>
-        <!-- Added mass -->
-        <xDotU>0.0</xDotU>
-        <yDotV>0.0</yDotV>
-        <nDotR>0.0</nDotR>
-        <!-- Linear and quadratic drag -->
-        <xU>100.0</xU>
-        <xUU>150.0</xUU>
-        <yV>100.0</yV>
-        <yVV>100.0</yVV>
-        <zW>500.0</zW>
-        <kP>300.0</kP>
-        <kPP>600.0</kPP>
-        <mQ>900.0</mQ>
-        <mQQ>900.0</mQQ>
-        <nR>800.0</nR>
-        <nRR>800.0</nRR>
+        filename="gz-waves1-hydrodynamics-system"
+        name="gz::sim::systems::Hydrodynamics">
+
+        <!-- Or apply hydrodynamics to named links -->
+        <enable>${namespace}::base_link</enable>
+        <!-- Hydrodynamics -->
+        <hydrodynamics>
+          <damping_on>1</damping_on>
+          <viscous_drag_on>1</viscous_drag_on>
+          <pressure_drag_on>1</pressure_drag_on>
+
+          <!-- Linear and Angular Damping -->  
+          <cDampL1>1.0E-6</cDampL1>
+          <cDampL2>1.0E-6</cDampL2>
+          <cDampR1>1.0E-6</cDampR1>
+          <cDampR2>1.0E-6</cDampR2>
+
+          <!-- 'Pressure' Drag -->
+          <cPDrag1>1.0E+2</cPDrag1>
+          <cPDrag2>1.0E+2</cPDrag2>
+          <fPDrag>0.4</fPDrag>
+          <cSDrag1>1.0E+2</cSDrag1>
+          <cSDrag2>1.0E+2</cSDrag2>
+          <fSDrag>0.4</fSDrag>
+          <vRDrag>1.0</vRDrag>
+        </hydrodynamics>
+
       </plugin>
 
     </gazebo>
