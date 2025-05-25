@@ -4,19 +4,15 @@
   <world name="guanabra_bay">
 
     <physics name="1ms" type="ode">
-      <!-- <max_step_size>0.1</max_step_size> -->         <!-- 1 kHz -->
-      
-      <!--<real_time_update_rate>1000</real_time_update_rate> -->
-      <real_time_factor>0</real_time_factor> 
+      <real_time_factor>1</real_time_factor> 
       <max_step_size>0.1</max_step_size>
-      <!-- <real_time_factor>0</real_time_factor>-->
       <gravity>0 0 -9.81</gravity>
       <ode>
         <solver>
           <type>quick</type>
-          <min_step_size>0.01</min_step_size>
-          <iters>25</iters>
-          <sor>1.4</sor>
+          <min_step_size>0.001</min_step_size>
+          <iters>20</iters>
+          <sor>1.3</sor>
           <island_threads>10</island_threads>
         </solver>
       </ode>
@@ -38,8 +34,8 @@
         <background_color>0.8 0.8 0.8</background_color>
         <camera_pose>-182 -663 13.2 0 0.25 2.94</camera_pose>
         <camera_clip>
-          <near>0.25</near>
-          <far>1000</far>
+          <near>2</near>
+          <far>500</far>
         </camera_clip>
       </plugin>
 
@@ -228,14 +224,6 @@
       name="gz::sim::systems::Magnetometer">
     </plugin>
     <plugin
-      filename="gz-sim-forcetorque-system"
-      name="gz::sim::systems::ForceTorque">
-    </plugin>
-    <plugin
-      filename="gz-sim-particle-emitter2-system"
-      name="gz::sim::systems::ParticleEmitter2">
-    </plugin>
-    <plugin
       filename="gz-sim-scene-broadcaster-system"
       name="gz::sim::systems::SceneBroadcaster">
     </plugin>
@@ -316,7 +304,7 @@
       <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.2 0.2 0.2 1</specular>
       <attenuation>
-        <range>1000</range>
+        <range>550</range>
         <constant>0.9</constant>
         <linear>0.01</linear>
         <quadratic>0.001</quadratic>
