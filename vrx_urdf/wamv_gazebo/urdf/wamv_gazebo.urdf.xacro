@@ -145,7 +145,8 @@
       <!-- Add Containment Boom -->
       <xacro:include filename="$(find wamv_description)/urdf/boom.xacro" />
       <xacro:containment_boom position="2.6 0 2" orientation="0 0 ${radians(90)}"/>
-
+      <xacro:include filename="$(find wamv_description)/urdf/detect_radius.xacro" />
+      <xacro:detect_radius position="0 0 2" orientation="0 0 ${radians(90)}"/>
       <!-- Add simulated GPS -->
       <xacro:wamv_gps name="gps_wamv" x="0" />
 

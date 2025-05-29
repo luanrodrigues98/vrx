@@ -18,7 +18,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 import os
-
+import random
 import vrx_gz.launch
 from vrx_gz.model import Model
 
@@ -30,6 +30,7 @@ def launch(context, *args, **kwargs):
     particle_id = int(LaunchConfiguration('particle_id').perform(context))
     world_name = LaunchConfiguration('world').perform(context)
     sim_mode = LaunchConfiguration('sim_mode').perform(context)
+    spawn_mode = str(LaunchConfiguration('spawn_mode').perform(context))
     bridge_competition_topics = LaunchConfiguration(
         'bridge_competition_topics').perform(context).lower() == 'true'
     robot = LaunchConfiguration('robot').perform(context)
@@ -46,28 +47,41 @@ def launch(context, *args, **kwargs):
         with open(config_file, 'r') as stream:
             models = Model.FromConfig(stream)
     else:
-        y = -663
-        x = -182 
-        counter = 0
-        for i in range(swarm_size):
-            pos = 10*counter
-            x = -182 + pos
-                
-            if (i+1) % 5 == 0:
-                y += 10
-                x = -182
-                counter = 0 
-            counter += 1
-            _id = i + 1 
-            if swarm_size > 1:
-                vechicle_id = f'wamv{_id}_{iteration}_{particle_id}'
-            else:
-                vechicle_id = 'wamv'
-            m = Model(vechicle_id, 'wam-v', [x, y, 0, 0, 0, 0])
-            if robot_urdf and robot_urdf != '':
-                m.set_urdf(robot_urdf)
-            models.append(m)
-
+        if spawn_mode == 'grid': 
+            y = -663
+            x = -182 
+            counter = 0
+            for i in range(swarm_size):
+                pos = 10*counter
+                x = -182 + pos
+                    
+                if (i+1) % 5 == 0:
+                    y += 10
+                    x = -182
+                    counter = 0 
+                counter += 1
+                _id = i + 1 
+                if swarm_size > 1:
+                    vechicle_id = f'wamv{_id}_{iteration}_{particle_id}'
+                else:
+                    vechicle_id = 'wamv'
+                m = Model(vechicle_id, 'wam-v', [x, y, 0, 0, 0, 0])
+                if robot_urdf and robot_urdf != '':
+                    m.set_urdf(robot_urdf)
+                models.append(m)
+        elif spawn_mode == 'random':
+            for i in range(swarm_size):
+                x = -182 + random.uniform(-150, 150)
+                y = -663 + random.uniform(-150, 150)
+                _id = i + 1 
+                if swarm_size > 1:
+                    vechicle_id = f'wamv{_id}_{iteration}_{particle_id}'
+                else:
+                    vechicle_id = 'wamv'
+                m = Model(vechicle_id, 'wam-v', [x, y, 0, 0, 0, 0])
+                if robot_urdf and robot_urdf != '':
+                    m.set_urdf(robot_urdf)
+                models.append(m)
     world_name, ext = os.path.splitext(world_name)
     launch_processes.extend(vrx_gz.launch.simulation(world_name, headless, 
                                                      gz_paused, extra_gz_args))
@@ -92,6 +106,11 @@ def generate_launch_description():
             'iteration',
             default_value='1',
             description='Iteration of the competition.'
+        ),
+        DeclareLaunchArgument(
+            'spawn_mode',
+            default_value='grid',
+            description='Spawn mode: "grid", "random".'
         ),
         DeclareLaunchArgument(
             'particle_id',

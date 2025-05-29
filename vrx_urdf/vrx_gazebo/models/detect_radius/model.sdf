@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="detect_radius">
+    <link name="detect_radius_link">
+      <visual name="detect_radius_visual">
+        <pose>0 0 0 0 0 0 </pose>
+        <geometry>
+          <mesh>                                        
+            <uri>model://detect_radius/mesh/detect_radius.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

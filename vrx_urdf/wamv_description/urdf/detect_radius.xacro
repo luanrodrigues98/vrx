@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="wam-v-containment-boom">
+<xacro:macro name="detect_radius" params="position:='0 0 0' orientation:='0 0 0'">
+  <link name="${namespace}/detect_radius_link">
+      <visual>
+        <origin xyz="0 -1.03 -.45" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://vrx_gazebo/models/detect_radius/mesh/detect_radius.dae"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+  </link> 
+  <joint name ="${namespace}/chasis_detect_radius_joint" type="fixed">
+    <origin xyz="${position}" rpy="${orientation}"/>
+    <parent link="${namespace}/base_link"/>
+    <child link="${namespace}/detect_radius_link"/>
+  </joint>
+</xacro:macro>
+</robot>
+
