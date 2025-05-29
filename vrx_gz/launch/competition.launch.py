@@ -26,6 +26,8 @@ from vrx_gz.model import Model
 def launch(context, *args, **kwargs):
     config_file = LaunchConfiguration('config_file').perform(context)
     swarm_size = int(LaunchConfiguration('swarm_size').perform(context))
+    iteration = int(LaunchConfiguration('iteration').perform(context))
+    particle_id = int(LaunchConfiguration('particle_id').perform(context))
     world_name = LaunchConfiguration('world').perform(context)
     sim_mode = LaunchConfiguration('sim_mode').perform(context)
     bridge_competition_topics = LaunchConfiguration(
@@ -58,7 +60,7 @@ def launch(context, *args, **kwargs):
             counter += 1
             _id = i + 1 
             if swarm_size > 1:
-                vechicle_id = f'wamv{_id}'
+                vechicle_id = f'wamv{_id}_{iteration}_{particle_id}'
             else:
                 vechicle_id = 'wamv'
             m = Model(vechicle_id, 'wam-v', [x, y, 0, 0, 0, 0])
@@ -85,6 +87,16 @@ def generate_launch_description():
             'swarm_size',
             default_value='1',
             description='Number of WAM-Vs to spawn in the simulation.'
+        ),
+        DeclareLaunchArgument(
+            'iteration',
+            default_value='1',
+            description='Iteration of the competition.'
+        ),
+        DeclareLaunchArgument(
+            'particle_id',
+            default_value='1',
+            description='Particle id of the competition.'
         ),
         DeclareLaunchArgument(
             'world',
