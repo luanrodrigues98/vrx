@@ -52,14 +52,14 @@ def generate_launch_description():
             description='Name of world'),
         DeclareLaunchArgument(
             'sim_mode',
-            default_value='full',
+            default_value='sim',
             description='Simulation mode: "full", "sim", "bridge".'
                         'full: spawns robot and launch ros_gz bridges, '
                         'sim: spawns robot only, '
                         'bridge: launch ros_gz bridges only.'),
         DeclareLaunchArgument(
             'bridge_competition_topics',
-            default_value='True',
+            default_value='False',
             description='True to bridge competition topics, False to disable bridge.'),
         DeclareLaunchArgument(
             'config_file',
