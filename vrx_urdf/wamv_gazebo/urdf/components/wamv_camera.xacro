@@ -154,20 +154,20 @@
       </visual>
 
       <sensor type="camera" name="${name}_sensor">
-        <update_rate>30.0</update_rate>
+        <update_rate>1.0</update_rate>
 	<xacro:if value="${visualize}">
 	  <visualize>true</visualize>
 	</xacro:if>
         <camera name="${name}_camera">
           <horizontal_fov>1.3962634</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>R8G8B8</format>
+            <width>25</width>
+            <height>25</height>
+            <format>L8</format>
           </image>
           <clip>
             <near>0.05</near>
-            <far>400</far>
+            <far>15</far>
           </clip>
           <noise>
             <type>gaussian</type>
