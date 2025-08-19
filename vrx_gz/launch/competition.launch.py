@@ -40,6 +40,9 @@ def launch(context, *args, **kwargs):
     competition_mode = LaunchConfiguration('competition_mode').perform(context).lower() == 'true'
     extra_gz_args = LaunchConfiguration('extra_gz_args').perform(context)
     optimization_mode = LaunchConfiguration('optimization_mode').perform(context).lower() == 'true'
+    # Adicionar configurações para coordenadas base
+    base_x = float(LaunchConfiguration('base_x').perform(context))
+    base_y = float(LaunchConfiguration('base_y').perform(context))
     launch_processes = []
 
     models = []
@@ -48,16 +51,16 @@ def launch(context, *args, **kwargs):
             models = Model.FromConfig(stream)
     else:
         if spawn_mode == 'grid': 
-            y = -663
-            x = -182 
+            y = base_y
+            x = base_x 
             counter = 0
             for i in range(swarm_size):
                 pos = 10*counter
-                x = -182 + pos
+                x = base_x + pos
                     
                 if (i+1) % 5 == 0:
                     y += 10
-                    x = -182
+                    x = base_x
                     counter = 0 
                 counter += 1
                 _id = i + 1 
@@ -72,14 +75,14 @@ def launch(context, *args, **kwargs):
                     m.set_urdf(robot_urdf)
                 models.append(m)
         elif spawn_mode == 'random':
-            low = -300
-            high = 300
+            val = 300
+            low, high= -val, val
             vals = random.sample(range(low, high+1), swarm_size * 2)
             driff_places = [ vals[i*2:(i+1)*2] for i in range(swarm_size) ]
 
             for i in range(swarm_size):
-                x = -182 + driff_places[i][0]
-                y = -663 + driff_places[i][1]
+                x = base_x + driff_places[i][0]
+                y = base_y + driff_places[i][1]
                 _id = i + 1 
                 if swarm_size > 1:
                     vechicle_id = f'wamv{_id}_{iteration}_{particle_id}'
@@ -175,5 +178,15 @@ def generate_launch_description():
             'extra_gz_args',
             default_value='',
             description='Additional arguments to be passed to gz sim. '),
+        DeclareLaunchArgument(
+            'base_x',
+            default_value='-182',
+            description='Base x coordinate for grid spawn.'
+        ),
+        DeclareLaunchArgument(
+            'base_y',
+            default_value='-663',
+            description='Base y coordinate for grid spawn.'
+        ),
         OpaqueFunction(function=launch),
     ])
