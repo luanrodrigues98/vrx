@@ -38,7 +38,7 @@
         <scene>scene</scene>
         <ambient_light>0.4 0.4 0.4</ambient_light>
         <background_color>0.8 0.8 0.8</background_color>
-        <camera_pose>0 0 13.2 0 0.25 2.94</camera_pose>
+        <camera_pose>2500 2500 13.2 0 0.25 2.94</camera_pose>
         <camera_clip>
           <near>2</near>
           <far>5000</far>
@@ -278,7 +278,7 @@
     </plugin>
 
     <include>
-      <pose>0 0 0 0 0 0</pose>
+      <pose>2500 2500 0 0 0 0</pose>
       <uri>model://waves</uri>
     </include>
     <!--
@@ -288,7 +288,7 @@
     </include> 
     -->
     <model name="fixed_cylinder">
-      <pose>-1005 -514 0 0 0 0</pose>
+      <pose>4500 4500 0 0 0 0</pose>
       <static>true</static>
       <link name="cylinder_link">
         <visual name="cylinder_visual">

@@ -114,14 +114,14 @@
 
   <!-- Otherwise, add sensors based on enable variables -->
   <xacro:unless value="$(arg yaml_component_generation)">
-    <!-- Add a front camera -->
+    <!-- Add a front camera 
     
     <xacro:wamv_camera name="right_camera" y="-0.45" x="0" P="${radians(30)}" Y="${radians(-90)}" post_Y="${radians(-90)}" />
     <xacro:wamv_camera name="left_camera" y="0.45" x="0" P="${radians(30)}" Y="${radians(90)}" post_Y="${radians(90)}" />
     <xacro:wamv_camera name="front_camera" y="0" x="0.85" P="${radians(30)}" Y="${radians(0)}" post_Y="${radians(0)}" />
     <xacro:wamv_camera name="back_camera" y="0" x="-0.85" P="${radians(30)}" Y="${radians(-180)}" post_Y="${radians(-180)}" />
 
-
+    -->
     <!-- Add simulated GPS -->
     <xacro:if value="$(arg gps_enabled)">
       <xacro:wamv_gps name="gps_wamv" x="-0.85" />

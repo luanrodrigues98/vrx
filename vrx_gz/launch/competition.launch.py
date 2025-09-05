@@ -43,9 +43,11 @@ def launch(context, *args, **kwargs):
     # Adicionar configurações para coordenadas base
     base_x = float(LaunchConfiguration('base_x').perform(context))
     base_y = float(LaunchConfiguration('base_y').perform(context))
+    deployment_space = int(LaunchConfiguration('deployment_space').perform(context))
     launch_processes = []
 
     models = []
+    random.seed(42)
     if config_file and config_file != '':
         with open(config_file, 'r') as stream:
             models = Model.FromConfig(stream)
@@ -75,7 +77,7 @@ def launch(context, *args, **kwargs):
                     m.set_urdf(robot_urdf)
                 models.append(m)
         elif spawn_mode == 'random':
-            val = 300
+            val = deployment_space
             low, high= -val, val
             vals = random.sample(range(low, high+1), swarm_size * 2)
             driff_places = [ vals[i*2:(i+1)*2] for i in range(swarm_size) ]
@@ -187,6 +189,11 @@ def generate_launch_description():
             'base_y',
             default_value='-663',
             description='Base y coordinate for grid spawn.'
+        ),
+        DeclareLaunchArgument(
+            'deployment_space',
+            default_value='300',
+            description='Deployment space for grid spawn.'
         ),
         OpaqueFunction(function=launch),
     ])
