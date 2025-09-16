@@ -288,7 +288,7 @@
     </include> 
     -->
     <model name="fixed_cylinder">
-      <pose>4500 4500 0 0 0 0</pose>
+      <pose>2500 2500 4 0 0 0</pose>
       <static>true</static>
       <link name="cylinder_link">
         <visual name="cylinder_visual">
